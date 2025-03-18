@@ -1,0 +1,28 @@
+{{ define "main" }}
+<main>
+  
+  
+  <div class="gallery">
+    {{ range sort (index .Site.Data "images") "date" "asc" }}
+      <div class="image-item">
+        <p>Date: {{ .date | time.Format "02/01/2006" }}</p>  
+        <img src="{{ .url }}" alt="Image du {{ .date | time.Format "02/01/2006" }}">
+      </div>
+    {{ end }}
+  </div>
+</main>
+<style>
+  .gallery{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-item img {
+    width: 80vw;
+    margin: 0px;
+    max-width: 1500px;
+  }
+</style>
+{{ end }}
+

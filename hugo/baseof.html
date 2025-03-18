@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }}{{ if ne .Title .Site.Title }} | {{ .Site.Title }}{{ end }}</title>
+    <style>
+        html{
+            padding: 0px;
+        }
+        body {
+            background-color: black;
+            color: white;
+            font-family: sans-serif;
+            margin: 0px;
+        }
+        h1{
+            background-color: rgb(65, 65, 65);
+            margin: 0px;
+            margin-bottom: 50px;
+            padding : 10px;
+        }
+        /* Ajoutez vos styles ici */
+    </style>
+</head>
+<body>
+    <h1>{{ .Site.Title }}</h1>
+    {{ block "main" . }}{{ end }}
+</body>
+</html>
