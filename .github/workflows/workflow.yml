@@ -49,7 +49,7 @@ jobs:
 
       - name: Debug Data.json
         run: cat hugo-page/data/data.json
-        
+
       - name: Build Hugo site
         run: |
           cd hugo-page
@@ -59,10 +59,10 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: hugo-site/public
+          path: hugo-page/public
           
       - name: Debug generated files
-        run: ls -la hugo-site/public
+        run: ls -la hugo-page/public
         
       - name: Clean up .env
         run: rm -f .env
