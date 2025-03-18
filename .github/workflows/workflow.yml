@@ -47,6 +47,9 @@ jobs:
           cp -r hugo/hugo.toml hugo-page/
           cp data.json hugo-page/data/
 
+      - name: Debug Data.json
+        run: cat hugo-page/data/data.json
+        
       - name: Build Hugo site
         run: |
           cd hugo-page
