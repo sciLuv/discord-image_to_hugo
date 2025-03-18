@@ -50,5 +50,11 @@ Store the following information in **repository secrets**, as mentioned in the p
 
 ---
 
-# configuration : 
-you have to modify hugo.toml file to change the title of the website in it interface.
+## Configuration : 
+You have to modify hugo.toml file to change the title of the website in it interface.
+
+---
+
+## License
+
+Do what you want ! (ツ)
