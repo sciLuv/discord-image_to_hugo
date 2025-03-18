@@ -1,53 +1,54 @@
-# Discord To Hugo
+# Discord To Hugo  
 
-## But et fonctionnement : 
-Ce projet permet de regrouper sur une page web statique (via Hugo) les images postées par les utilisateurs d'un salon ou d'un fil Discord. Initialement conçu pour mieux organiser et visualiser les pages de bd poster par une connaissance sur un salon discord particuler, il offre une solution pratique pour consulter l’ensemble des images d'un salon en un seul endroit.
+## Purpose and Functionality  
 
-**Remarque** : Il peut être nécessaire d'ajuster les permissions des salons Discord pour s’assurer que le bot puisse récupérer uniquement les images souhaitées.
+This project allows users to gather images posted in a specific Discord channel or thread and display them on a static web page using Hugo. Initially designed to better organize and view comic pages posted by an acquaintance in a particular Discord channel, it provides a convenient solution for accessing all images from a channel in one place.  
 
-## Création d’un bot Discord  
+The goal is to use GitHub Pages to avoid self-hosting anything while also exploring GitHub Actions as a learning experience.
 
-1. **Passer un compte Discord en mode développeur**  
-2. **Créer une application/bot**  
-   - Accédez au [portail des développeurs Discord](https://discord.com/developers/applications)  
-   - Créez une nouvelle application  
-   - Dans l'onglet **Bot**, ajoutez un bot à cette application  
-3. **Configurer les permissions du bot**  
-   - Rendez-vous dans la section **OAuth2 > URL Generator**  
-   - Cochez le scope **bot**  
-   - Dans **Bot Permissions**, cochez administrator 
-4. **Ajouter le bot à un serveur Discord**  
-   - Copiez l'URL générée et ouvrez-la dans un navigateur  
-   - Sélectionnez le serveur et autorisez le bot  
-5. **Configurer le bot**  
-   - Rendez-vous dans l'onglet **Bot** de votre application  
-   - **Générez et copiez** le **token du bot** (gardez-le confidentiel)  
-   - **Activez** l’option **Message Content Intent**  
+**Note**: You may need to adjust Discord channel permissions to ensure the bot can retrieve only the desired images.  
 
----
+## Creating a Discord Bot  
 
-## Déploiement sur GitHub Pages  
-
-1. **Cloner le dépôt GitHub**  
-   ```bash
-   git clone https://github.com/votre-utilisateur/votre-repo.git
-   cd votre-repo
-   ```
-2. **Configurer GitHub Actions**  
-   - Allez dans **Settings > Actions > General > Workflow permissions** et sélectionnez **Read and Write permissions**  
-   - Configurez **Settings > Pages > Build and Deployment** sur **GitHub Actions**  
-   - Ajoutez les variables d’environnement dans **Settings > Security > Secrets and variables > Actions >  Repository secrets** en vous aidant les instructions données dans la section suivante.
+1. **Enable Developer Mode on a Discord Account**  
+2. **Create an Application/Bot**  
+   - Go to the [Discord Developer Portal](https://discord.com/developers/applications)  
+   - Create a new application  
+   - In the **Bot** tab, add a bot to this application  
+3. **Set Up Bot Permissions**  
+   - Navigate to **OAuth2 > URL Generator**  
+   - Check the **bot** scope  
+   - Under **Bot Permissions**, select **Administrator**  
+4. **Add the Bot to a Discord Server**  
+   - Copy the generated URL and open it in a browser  
+   - Select the server and authorize the bot  
+5. **Configure the Bot**  
+   - Go to the **Bot** tab in your application  
+   - **Generate and copy** the **bot token** (keep it confidential)  
+   - **Enable** the **Message Content Intent** option  
 
 ---
 
-## Configuration des variables d’environnement  
+## Deployment on GitHub Pages  
 
-mettres ces informations dans **repository secrets** comme vu dans la section précédente, chaque variable doit etre mis dans une nouvelle repository secret, nommé exactement de la même maniere que celle suivante :
-
-**APPLICATION_ID** # Disponible dans Settings > General Information sur le portail des développeurs Discord  
-**DISCORD_TOKEN** # Token généré dans Settings > Bot  
-**SERVER_ID** # ID du serveur, récupérable en mode développeur (clic droit sur le serveur > Copier l'ID)  
-**CHANNEL_ID** # ID du salon, récupérable en mode développeur (clic droit sur le salon > Copier l'ID)  
-
+1. **Fork this GitHub Repository**  
+2. **Configure GitHub Actions**  
+   - Go to **Settings > Actions > General > Workflow permissions** and select **Read and Write permissions**  
+   - In **Settings > Pages > Build and Deployment**, set the deployment method to **GitHub Actions**  
+   - Add environment variables in **Settings > Security > Secrets and variables > Actions > Repository secrets**, following the instructions in the next section.  
 
 ---
+
+## Configuring Environment Variables  
+
+Store the following information in **repository secrets**, as mentioned in the previous section. Each variable must be added as a separate repository secret, named exactly as shown below:  
+
+- **APPLICATION_ID** – Available in **Settings > General Information** on the Discord Developer Portal  
+- **DISCORD_TOKEN** – Token generated in **Settings > Bot**  
+- **SERVER_ID** – Server ID, retrievable in Developer Mode (Right-click on the server > Copy ID)  
+- **CHANNEL_ID** – Channel ID, retrievable in Developer Mode (Right-click on the channel > Copy ID)  
+
+---
+
+# configuration : 
+you have to modify hugo.toml file to change the title of the website in it interface.
