@@ -49,7 +49,7 @@ jobs:
 
       - name: Build Hugo site
         run: |
-          cd hugo-site
+          cd hugo-page
           hugo --minify
 
       - name: Upload artifact for GitHub Pages
