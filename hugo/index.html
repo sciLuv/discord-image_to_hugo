@@ -3,8 +3,7 @@
   
   
   <div class="gallery">
-    {{ printf "%#v" (index .Site.Data "images") }}
-    {{ range sort (index .Site.Data "images") "date" "asc" }}
+    {{ range sort (index .Site.Data "data") "date" "asc" }}
       <div class="image-item">
         <p>Date: {{ .date | time.Format "02/01/2006" }}</p>  
         <img src="{{ .url }}" alt="Image du {{ .date | time.Format "02/01/2006" }}">
