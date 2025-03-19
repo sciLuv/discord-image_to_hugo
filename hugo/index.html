@@ -8,21 +8,223 @@
         <p>Date: {{ .date | time.Format "02/01/2006" }}</p>  
         <img src="{{ .url }}" alt="Image du {{ .date | time.Format "02/01/2006" }}">
       </div>
+      <div class="lightbox" id="lightbox">
+        <button class="close" onclick="closeLightbox()">X</button>
+        <button class="prev" onclick="prevImage()">&#10094;</button>
+    
+        <div class="lightbox-container">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+    
+        <button class="next" onclick="nextImage()">&#10095;</button>
+        <input type="range" id="zoom-slider" min="1" max="2" step="0.1" value="1">
+    </div>
+    
+    
     {{ end }}
   </div>
+  <button id="scroll-bottom" onclick="scrollToBottom()">↓ Aller en bas</button>
 </main>
-<style>
-  .gallery{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+<script>
+  let imageItem = document.querySelectorAll('.image-item');
+  let images = document.querySelectorAll('.image-item img');
+  let lightbox = document.getElementById('lightbox');
+  let lightboxImg = document.getElementById('lightbox-img');
+  let currentIndex = 0;
+
+  images.forEach((img, index) => {
+      img.addEventListener('click', () => {
+          openLightbox(index);
+          imageItem.forEach((imgItem) => {
+            imgItem.style.display = 'none';
+          })
+      });
+  });
+
+  function openLightbox(index) {
+      currentIndex = index;
+      lightbox.style.display = 'flex';
+      lightboxImg.src = images[currentIndex].src;
   }
 
-  .image-item img {
-    width: 80vw;
-    margin: 0px;
-    max-width: 1500px;
+  function closeLightbox() {
+      lightbox.style.display = 'none';
+      imageItem.forEach((imgItem) => {
+            imgItem.style.display = 'block';
+          })
   }
+
+  function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      lightboxImg.src = images[currentIndex].src;
+  }
+
+  function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      lightboxImg.src = images[currentIndex].src;
+  }
+
+  function scrollToBottom() {
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
+  }
+
+  function updateScrollButton() {
+      if (lightbox.style.display === 'flex') {
+          document.body.classList.add('lightbox-active');
+      } else {
+          document.body.classList.remove('lightbox-active');
+      }
+  }
+
+  images.forEach((img, index) => {
+      img.addEventListener('click', () => {
+          openLightbox(index);
+          updateScrollButton();
+      });
+  });
+
+  function closeLightbox() {
+      lightbox.style.display = 'none';
+      imageItem.forEach((imgItem) => imgItem.style.display = 'block');
+      updateScrollButton();
+  }
+
+  let zoomSlider = document.getElementById('zoom-slider');
+let lightboxContainer = document.querySelector('.lightbox-container');
+
+zoomSlider.addEventListener('input', () => {
+    let scale = zoomSlider.value;
+
+    lightboxImg.style.transform = `scale(${scale})`;
+
+    if (scale > 1) {
+        lightboxContainer.style.overflow = "auto";
+    } else {
+        lightboxContainer.style.overflow = "hidden";
+    }
+    simulateCloseOpen();
+});
+
+function simulateCloseOpen() {
+    lightboxContainer.style.display = "none"; 
+    setTimeout(() => {
+        lightboxContainer.style.display = "flex"; 
+    }, 1);
+}
+
+
+
+
+
+
+</script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #fff;
+}
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+.image-item img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.image-item img:hover {
+    transform: scale(1.05);
+}
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+.lightbox-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: auto;
+}
+.lightbox img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  transition: transform 0.2s ease-in-out;
+  transform-origin: top center; 
+}
+.close, .prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.close:hover, .prev:hover, .next:hover {
+  background-color: white;
+  color: black;
+}
+.close {
+  top: 20px;
+  right: 20px;
+}
+.prev {
+  left: 20px;
+}
+.next {
+  right: 20px;
+}
+#scroll-bottom {
+  border: solid black 2px;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  background: rgba(255, 255, 255);
+  color: rgb(0, 0, 0);
+  font-size: 18px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+#scroll-bottom:hover {
+  background: rgb(0, 0, 0);
+  color: rgb(251, 251, 251);
+}
+#zoom-slider {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  background: white;
+  border-radius: 5px;
+}
+.lightbox-active #scroll-bottom {
+  display: none;
+}
 </style>
 {{ end }}
-

@@ -1,5 +1,6 @@
 .env
 node_modules
 discord-bot
-workingFile.txt
+workfile.txt
 gitlab
+hugo-site
