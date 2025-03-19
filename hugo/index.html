@@ -22,7 +22,7 @@
     
     {{ end }}
   </div>
-  <button id="scroll-bottom" onclick="scrollToBottom()">↓ Aller en bas</button>
+  <button id="scroll-bottom" onclick="scrollToBottom()">↓</button>
 </main>
 
 <script>
@@ -125,13 +125,25 @@
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 20px;
       padding: 20px;
+      object-fit: contain;
+      @media (max-width: 450px) {
+        padding : 0px;
+        gap: 0px;
+      }
+  }
+  .image-item{
+    max-width: 100vw;
   }
   .image-item img {
       width: 100%;
       max-width: 500px;
+      height: auto;
       border-radius: 10px;
       cursor: pointer;
       transition: transform 0.3s;
+      @media (max-width: 450px) {
+        border-radius: 0px;
+      }
   }
   .image-item img:hover {
       transform: scale(1.05);
@@ -196,13 +208,13 @@
     border: solid black 2px;
     position: fixed;
     bottom: 20px;
-    right: 30px;
+    left: 30px;
     background: rgba(255, 255, 255);
     color: rgb(0, 0, 0);
     font-size: 18px;
     padding: 10px 15px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 100px;
     transition: background 0.3s;
   }
   #scroll-bottom:hover {
