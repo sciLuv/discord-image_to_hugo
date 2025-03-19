@@ -1,8 +1,8 @@
 name: DISCORD_TO_HUGO
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/5 * * * *' 
+  #schedule:
+  #  - cron: '* */6 * * *' 
 
 jobs:
   build:

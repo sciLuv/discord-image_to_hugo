@@ -51,7 +51,13 @@ Store the following information in **repository secrets**, as mentioned in the p
 ---
 
 ## Configuration : 
-You have to modify hugo.toml file to change the title of the website in it interface.
+1) You have to modify hugo.toml file to change the title of the website in it interface.
+2) by default the github action is set to user triggered, you have to uncomment lines :
+```yml
+  schedule:
+    - cron: '* */6 * * *' 
+```
+here, the github action is triggered every 6 hours but you can change the cron command as you want
 
 ---
 
