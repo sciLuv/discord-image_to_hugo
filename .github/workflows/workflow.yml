@@ -42,11 +42,18 @@ jobs:
 
       - name: Move specific files
         run: |
-          mkdir -p hugo-page/content/ hugo-page/layouts/ hugo-page/layouts/_default hugo-page/data/
+          mkdir -p hugo-page/content/ \
+                   hugo-page/data/ \
+                   hugo-page/layouts/ hugo-page/layouts/_default \
+                   hugo-page/assets hugo-page/assets/css hugo-page/assets/js
+                   
           cp -r hugo/page.md hugo-page/content/
           cp -r hugo/index.html hugo-page/layouts/
           cp -r hugo/baseof.html hugo-page/layouts/_default/
+          cp -r hugo/style.css hugo-page/assets/css
+          cp -r hugo/script.js hugo-page/assets/js
           cp -r hugo/hugo.toml hugo-page/
+
           cp data.json hugo-page/data/
 
       - name: Debug Data.json

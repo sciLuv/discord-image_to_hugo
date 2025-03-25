@@ -4,24 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ .Title }}{{ if ne .Title .Site.Title }} | {{ .Site.Title }}{{ end }}</title>
-    <style>
-        html{
-            padding: 0px;
-        }
-        body {
-            background-color: black;
-            color: white;
-            font-family: sans-serif;
-            margin: 0px;
-        }
-        h1{
-            background-color: rgb(65, 65, 65);
-            margin: 0px;
-            margin-bottom: 50px;
-            padding : 10px;
-        }
-        /* Ajoutez vos styles ici */
-    </style>
+    {{ $styles := resources.Get "css/style.css" | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
+    {{ $script := resources.Get "js/script.js" | minify | fingerprint }}
+    <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" async></script>
 </head>
 <body>
     <h1>{{ .Site.Title }}</h1>
