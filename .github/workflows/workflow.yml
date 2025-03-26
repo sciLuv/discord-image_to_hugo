@@ -50,8 +50,8 @@ jobs:
           cp -r hugo/page.md hugo-page/content/
           cp -r hugo/index.html hugo-page/layouts/
           cp -r hugo/baseof.html hugo-page/layouts/_default/
-          cp -r hugo/style.css hugo-page/assets/css
-          cp -r hugo/script.js hugo-page/assets/js
+          cp -r hugo/style.css hugo-page/assets/css/style.css
+          cp -r hugo/script.js hugo-page/assets/js/script.js
           cp -r hugo/hugo.toml hugo-page/
 
           cp data.json hugo-page/data/
