@@ -79,6 +79,8 @@ jobs:
       - name: Vérifier les fichiers générés
         run: ls -la hugo-page/public/css/ && ls -la hugo-page/public/js/
 
+      - name: Vérifier le HTML généré
+        run: cat hugo-page/public/index.html
         
       - name: Clean up .env
         run: rm -f .env
