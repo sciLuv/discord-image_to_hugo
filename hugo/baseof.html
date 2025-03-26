@@ -6,10 +6,10 @@
         <title>{{ .Title }}{{ if ne .Title .Site.Title }} | {{ .Site.Title }}{{ end }}</title>
     
         {{ $styles := resources.Get "css/style.css" | minify }}
-        <link rel="stylesheet" href="{{ $styles.RelPermalink | relURL }}" integrity="{{ $styles.Data.Integrity }}">
+        <link rel="stylesheet" href="./css/style.css" integrity="{{ $styles.Data.Integrity }}">
     
         {{ $script := resources.Get "js/script.js" | minify }}
-        <script src="{{ $script.RelPermalink | relURL }}" integrity="{{ $script.Data.Integrity }}" async></script>
+        <script src="./js/script.js" integrity="{{ $script.Data.Integrity }}" async></script>
     </head>
     
 <body>
