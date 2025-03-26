@@ -58,7 +58,7 @@ jobs:
 
       - name: debug js css
         run: cat hugo-page/assets/css/style.css 
-        
+
       - name: Debug Data.json
         run: cat hugo-page/data/data.json
 
@@ -75,6 +75,10 @@ jobs:
           
       - name: Debug generated files
         run: ls -la hugo-page/public
+      
+      - name: Vérifier les fichiers générés
+        run: ls -la hugo-page/public/css/ && ls -la hugo-page/public/js/
+
         
       - name: Clean up .env
         run: rm -f .env
