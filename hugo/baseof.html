@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ .Title }}{{ if ne .Title .Site.Title }} | {{ .Site.Title }}{{ end }}</title>
-    {{ $styles := resources.Get "css/style.css" | minify | fingerprint }}
+    {{ $styles := resources.Get "css/style.css" | minify }}
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
-    {{ $script := resources.Get "js/script.js" | minify | fingerprint }}
+    {{ $script := resources.Get "js/script.js" | minify }}
     <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" async></script>
 </head>
 <body>
