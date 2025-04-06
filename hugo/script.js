@@ -4,6 +4,8 @@ let lightbox = document.getElementById('lightbox');
 let lightboxImg = document.getElementById('lightbox-img');
 let zoomSlider = document.getElementById('zoom-slider');
 let lightboxContainer = document.querySelector('.lightbox-container');
+let imageNum = document.querySelector('.actual-img-num')
+let totalImageNum = document.querySelector('.total-img-num')
 let currentIndex = 0;
 let scale = 1
 
@@ -17,22 +19,30 @@ images.forEach((img, index) => {
 });
 
 function openLightbox(index) {
+    
     currentIndex = index;
     lightbox.style.display = 'flex';
     lightboxImg.src = images[currentIndex].src;
     lightboxContainer.scrollTop = 0;
+
+    imageNum.innerHTML = currentIndex+1
+    totalImageNum.innerHTML = images.length+1
 }
 
 function prevImage() {
     currentIndex = (currentIndex - 1 + images.length) % images.length;
     lightboxImg.src = images[currentIndex].src;
     lightboxContainer.scrollTop = 0;
+
+    imageNum.innerHTML = currentIndex+1
 }
 
 function nextImage() {
     currentIndex = (currentIndex + 1) % images.length;
     lightboxImg.src = images[currentIndex].src;
     lightboxContainer.scrollTop = 0;
+
+    imageNum.innerHTML = currentIndex+1
 }
 
 document.addEventListener("keydown", (event) => {
@@ -100,6 +110,7 @@ document.addEventListener("wheel", (event) => {
     zoomSlider.value = scale;
     lightboxImg.style.transform = `scale(${scale})`;
 
+    
     if (scale > 1) lightboxContainer.style.overflow = "auto";
     else lightboxContainer.style.overflow = "hidden";
   

@@ -5,13 +5,24 @@
   <div class="gallery">
     {{ range sort (index .Site.Data "data") "date" "asc" }}
       <div class="image-item">
-        <p>Date: {{ .date | time.Format "02/01/2006" }}</p>  
+        
         <img src="{{ .url }}" alt="Image du {{ .date | time.Format "02/01/2006" }}">
       </div>
       <div class="lightbox" id="lightbox">
+        <div class="img-info">
+          <p> 
+            <span class="actual-img-num"></span>
+            /
+            <span class="total-img-num"></span>
+          </p>
+          <p>
+            {{ .date | time.Format "02/01/2006" }}
+          </p>
+          
+        </div>  
         <button class="close" onclick="closeLightbox()">X</button>
         <button class="prev" onclick="prevImage()">&#10094;</button>
-    
+        
         <div class="lightbox-container">
             <img id="lightbox-img" src="" alt="">
         </div>
