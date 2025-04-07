@@ -26,7 +26,7 @@ function openLightbox(index) {
     lightboxContainer.scrollTop = 0;
 
     imageNum.innerHTML = currentIndex+1
-    totalImageNum.innerHTML = images.length+1
+    totalImageNum.innerHTML = images.length
 }
 
 function prevImage() {
