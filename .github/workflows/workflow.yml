@@ -56,37 +56,23 @@ jobs:
 
           cp data.json hugo-page/data/
 
-      - name: debug js css
-        run: cat hugo-page/assets/css/style.css 
-
-      - name: Debug Data.json
-        run: cat hugo-page/data/data.json
-
       - name: Build Hugo site
         run: |
           cd hugo-page
           hugo --minify
 
-      - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          name: github-pages
-          path: hugo-page/public
-          
-      - name: Debug generated files
-        run: ls -la hugo-page/public
-      
-      - name: Vérifier les fichiers générés
-        run: ls -la hugo-page/public/css/ && ls -la hugo-page/public/js/
+      - name: Copy public to root-level "page" folder
+        run: |
+          rm -rf page
+          mv hugo-page/public page
 
-      - name: Vérifier le HTML généré
-        run: cat hugo-page/public/index.html
-        
-      - name: Clean up .env
-        run: rm -f .env
-
-      - name: Clean up data.json
-        run: rm -f data.json
+      - name: Commit and push static site to repo
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add page
+          git commit -m "Update static site [auto]" || echo "No changes to commit"
+          git push
         
   deploy:
     runs-on: ubuntu-latest
