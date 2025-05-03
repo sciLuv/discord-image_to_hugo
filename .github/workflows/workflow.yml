@@ -66,10 +66,9 @@ jobs:
           rm -rf page
           mv hugo-page/public page
 
-      - name: Commit and push static site to repo
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add page
-          git commit -m "Update static site [auto]" || echo "No changes to commit"
-          git push
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./page
+          publish_branch: gh-pages
