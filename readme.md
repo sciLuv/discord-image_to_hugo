@@ -46,7 +46,9 @@ Store the following information in **repository secrets**, as mentioned in the p
 - **APPLICATION_ID** – Available in **Settings > General Information** on the Discord Developer Portal  
 - **DISCORD_TOKEN** – Token generated in **Settings > Bot**  
 - **SERVER_ID** – Server ID, retrievable in Developer Mode (Right-click on the server > Copy ID)  
-- **CHANNEL_ID** – Channel ID, retrievable in Developer Mode (Right-click on the channel > Copy ID)  
+- **CHANNEL_ID** – Channel ID, retrievable in Developer Mode (Right-click on the channel > Copy ID)
+- **IGNORE_PATTERNS** – if an image is associate with a message include a ignore pattern, the image is not send. the ignore pattern is a list (example = !no,!dont,!avoid)
+- **USER_IDS** – A list of user id to verify which image are authorize to be send    
 
 ---
 
