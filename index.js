@@ -2,8 +2,10 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import { Client, GatewayIntentBits, Events } from 'discord.js';
 
+// Chargement des variables d'environnement
 dotenv.config();
 
+// Client Discord
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -12,65 +14,66 @@ const client = new Client({
   ],
 });
 
+// Récupère tous les messages d'un salon/thread
 async function fetchAllMessages(channel) {
   let allMessages = [];
-  let lastMessageId = null;
-
+  let lastId = null;
   while (true) {
-    const options = { limit: 100 };
-    if (lastMessageId) options.before = lastMessageId;
-
-    const messages = await channel.messages.fetch(options);
-    if (messages.size === 0) break;
-
-    allMessages = allMessages.concat(Array.from(messages.values()));
-    lastMessageId = messages.last().id;
+    const options = { limit: 100, before: lastId };
+    const msgs = await channel.messages.fetch(options);
+    if (msgs.size === 0) break;
+    allMessages.push(...msgs.values());
+    lastId = msgs.last().id;
   }
-
   return allMessages;
 }
 
-client.once(Events.ClientReady, async () => {
-  console.log(`✅ Connecté en tant que ${client.user.tag}!`);
+// Vérifications modulaires avant collecte des images
+function shouldProcessMessage(msg) {
+  // Vérification par auteur spécifique (si USER_IDS est défini)
+  if (process.env.USER_IDS) {
+    const allowedUsers = process.env.USER_IDS.split(',').map(id => id.trim());
+    if (!allowedUsers.includes(msg.author.id)) return false;
+  }
 
-  try {
-    const targetChannel = await client.channels.fetch(process.env.CHANNEL_ID);
-    if (!targetChannel || (!targetChannel.isTextBased() && !targetChannel.isThread())) {
-      console.error('❌ Le salon ou fil est introuvable ou non valide.');
-      return;
+  // Vérification par patterns ignorés (si IGNORE_PATTERNS est défini)
+  if (process.env.IGNORE_PATTERNS) {
+    const ignorePatterns = process.env.IGNORE_PATTERNS.split(',').map(p => p.trim());
+    for (const pattern of ignorePatterns) {
+      if (msg.content.includes(pattern)) return false;
     }
+  }
 
-    console.log(`📥 Chargement des messages depuis : ${targetChannel.name}`);
+  return true;
+}
 
-    const allMessages = await fetchAllMessages(targetChannel);
-    const imageData = [];
+client.once(Events.ClientReady, async () => {
+  console.log(`✅ Connecté en tant que ${client.user.tag}`);
 
-    allMessages.forEach(msg => {
-      if (msg.attachments.size > 0) {
-        msg.attachments.forEach(attachment => {
-          if (attachment.contentType && attachment.contentType.startsWith('image/')) {
-            imageData.unshift({
-              date: msg.createdAt.toISOString(),
-              url: attachment.url
-            });
-          }
-        });
-      }
-    });
-
-    fs.writeFile('data.json', JSON.stringify(imageData, null, 2), (err) => {
-      if (err) {
-        console.error('❌ Erreur lors de l\'enregistrement dans le fichier :', err);
-        process.exit(1);
-      } else {
-        console.log('✅ Données enregistrées dans data.json');
-        process.exit(0);
-      }
-    });
-  } catch (error) {
-    console.error('❌ Erreur lors du chargement des messages :', error);
+  const chan = await client.channels.fetch(process.env.CHANNEL_ID);
+  if (!chan || (!chan.isTextBased() && !chan.isThread())) {
+    console.error('❌ Salon introuvable ou non-textuel');
     process.exit(1);
   }
+
+  console.log(`📥 Chargement des messages depuis : ${chan.name}`);
+  const messages = await fetchAllMessages(chan);
+  const images = [];
+
+  for (const msg of messages) {
+    if (!shouldProcessMessage(msg)) continue;
+    if (msg.attachments.size === 0) continue;
+    msg.attachments.forEach(att => {
+      if (att.contentType?.startsWith('image/')) {
+        images.unshift({ date: msg.createdAt.toISOString(), url: att.url });
+      }
+    });
+  }
+
+  fs.writeFileSync('data.json', JSON.stringify(images, null, 2));
+  console.log(`✅ ${images.length} images enregistrées dans data.json`);
+  process.exit(0);
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
