@@ -25,6 +25,8 @@ jobs:
           echo "APPLICATION_ID=${{ secrets.APPLICATION_ID }}" >> .env
           echo "SERVER_ID=${{ secrets.SERVER_ID }}" >> .env
           echo "CHANNEL_ID=${{ secrets.CHANNEL_ID }}" >> .env
+          echo "IGNORE_PATTERNS=${{ secrets.IGNORE_PATTERNS}}" >> .env
+          echo "USER_IDS=${{ secrets.USER_IDS}}" >> .env
 
       - name: Run Node.js script
         run: node index.js
